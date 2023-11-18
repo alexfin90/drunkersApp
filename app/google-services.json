@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "363718434990",
+    "project_id": "drunkersapp",
+    "storage_bucket": "drunkersapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:363718434990:android:0789b36f6eac99b10e8d3f",
+        "android_client_info": {
+          "package_name": "com.softdream.drunkersapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2miwPMpIieVpS6fKyqIbiL4fKLQ4mBTg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
