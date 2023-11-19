@@ -74,32 +74,6 @@ class MainActivity : ComponentActivity() {
                 val viewModel: CocktailDetailViewModel = hiltViewModel()
                 CocktailDetailScreen(state = viewModel.state.value, viewModel = viewModel)
             }
-
-            /* val locations = stringResource(R.string.locationsScreen)
-             navController = rememberNavController()
-             NavHost(navController, startDestination = locations) {
-                 composable(route = locations) {
-                     val viewModel: LocationViewModel = hiltViewModel()
-                     LocationScreen(
-                         viewModel = viewModel,
-                         state = viewModel.state.value,
-                         onItemClick = { id -> navController.navigate("$locations/$id") })
-                 }*/
-            /*     composable(
-                     route = "$locations/{location_id}",
-                     deepLinks = listOf(navDeepLink {
-                         uriPattern = "${BuildConfig.DEEPLINK_BASE_URL}{location_id}"
-                     }),
-                     arguments = listOf(navArgument("location_id") {
-                         type = NavType.StringType
-                         defaultValue = ""
-                     })
-
-                 ) {
-                     val viewModel: LocationDetailViewModel = hiltViewModel()
-                     LocationDetailScreen(state = viewModel.state.value, viewModel)
-                 }
-             */
         }
     }
 

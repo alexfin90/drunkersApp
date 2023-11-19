@@ -26,6 +26,7 @@ class CocktailViewModel@Inject constructor(
     //ViewModel only modify the UI state  and call domain layer
     private val _state = mutableStateOf(CocktailScreenState(listOf()))
 
+
     //expose the state to compose without possibility to modify state
     val state: State<CocktailScreenState> get() = _state
 
