@@ -27,7 +27,7 @@ class CocktailRepository @Inject constructor(
 ) {
 
     suspend fun getAllCocktails(): Drinks {
-        var infoMessage = application?.getString(R.string.ok_internet).toString()
+        var infoMessage = ""
         return withContext(dispatcher) {
             try {
                 refreshCache()
@@ -66,9 +66,7 @@ class CocktailRepository @Inject constructor(
                     is ConnectException,
                     is HttpException -> {
                         if (cocktailsDao.getCocktailByName(name) == null) {
-                            throw Exception(
-
-                            )
+                            throw Exception()
                         }
                     }
                     else -> throw e

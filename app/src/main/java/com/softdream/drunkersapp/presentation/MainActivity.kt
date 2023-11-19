@@ -14,16 +14,18 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-
+import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
+import com.softdream.drunkersapp.BuildConfig
 import com.softdream.drunkersapp.R
-
+import com.softdream.drunkersapp.presentation.detail.CocktailDetailScreen
+import com.softdream.drunkersapp.presentation.detail.CocktailDetailViewModel
 import com.softdream.drunkersapp.presentation.list.CocktailScreen
 import com.softdream.drunkersapp.presentation.list.CocktailViewModel
-
 import com.softdream.drunkersapp.ui.theme.DrunkersAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -47,43 +49,57 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-
     @Composable
     fun DrunkersApp() {
         val cocktailsScreen = stringResource(id = R.string.cocktailsScreen)
         navController = rememberNavController()
-        NavHost(navController = navController, startDestination = cocktailsScreen ){
-            composable(route = cocktailsScreen){
+        NavHost(navController = navController, startDestination = cocktailsScreen) {
+            composable(route = cocktailsScreen) {
                 val viewModel: CocktailViewModel = hiltViewModel()
                 CocktailScreen(state = viewModel.state.value,
-                    viewModel = viewModel, onItemClick = {
-                    id -> navController.navigate("$cocktailsScreen/$id")
-                })
+                    viewModel = viewModel, onItemClick = { id ->
+                        navController.navigate("$cocktailsScreen/$id")
+                    })
             }
-       /* val locations = stringResource(R.string.locationsScreen)
-        navController = rememberNavController()
-        NavHost(navController, startDestination = locations) {
-            composable(route = locations) {
-                val viewModel: LocationViewModel = hiltViewModel()
-                LocationScreen(
-                    viewModel = viewModel,
-                    state = viewModel.state.value,
-                    onItemClick = { id -> navController.navigate("$locations/$id") })
-            }*/
-     /*       composable(
-                route = "$locations/{location_id}",
+            composable(
+                route = "$cocktailsScreen/{cocktail_id}",
                 deepLinks = listOf(navDeepLink {
-                    uriPattern = "${BuildConfig.DEEPLINK_BASE_URL}{location_id}"
+                    uriPattern = "${BuildConfig.DEEPLINK_BASE_URL}{cocktail_id}"
                 }),
-                arguments = listOf(navArgument("location_id") {
+                arguments = listOf(navArgument("cocktail_id") {
                     type = NavType.StringType
                     defaultValue = ""
                 })
-
             ) {
-                val viewModel: LocationDetailViewModel = hiltViewModel()
-                LocationDetailScreen(state = viewModel.state.value, viewModel)
-            }*/
+                val viewModel: CocktailDetailViewModel = hiltViewModel()
+                CocktailDetailScreen(state = viewModel.state.value, viewModel = viewModel)
+            }
+
+            /* val locations = stringResource(R.string.locationsScreen)
+             navController = rememberNavController()
+             NavHost(navController, startDestination = locations) {
+                 composable(route = locations) {
+                     val viewModel: LocationViewModel = hiltViewModel()
+                     LocationScreen(
+                         viewModel = viewModel,
+                         state = viewModel.state.value,
+                         onItemClick = { id -> navController.navigate("$locations/$id") })
+                 }*/
+            /*     composable(
+                     route = "$locations/{location_id}",
+                     deepLinks = listOf(navDeepLink {
+                         uriPattern = "${BuildConfig.DEEPLINK_BASE_URL}{location_id}"
+                     }),
+                     arguments = listOf(navArgument("location_id") {
+                         type = NavType.StringType
+                         defaultValue = ""
+                     })
+
+                 ) {
+                     val viewModel: LocationDetailViewModel = hiltViewModel()
+                     LocationDetailScreen(state = viewModel.state.value, viewModel)
+                 }
+             */
         }
     }
 

@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Place
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,25 +22,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.ViewModel
 import com.softdream.drunkersapp.R
 import com.softdream.drunkersapp.domain.Cocktail
+import com.softdream.drunkersapp.presentation.detail.CocktailDetailViewModel
 
 @Composable
 fun CocktailScreen(
     state: CocktailScreenState,
     viewModel: ViewModel,
-    onItemClick: (id: String) -> Unit = {}
+    onItemClick: (name: String) -> Unit = {}
 ) {
-
-    if(state.toastMessage.isNotBlank()) {
-        Toast.makeText(LocalContext.current, state.toastMessage,Toast.LENGTH_LONG).show()
-    }
 
     when {
         state.cocktails.isNotEmpty() -> {
             LazyColumn(contentPadding = PaddingValues()) {
                 items(state.cocktails) { cocktail ->
                     CocktailItem(item = cocktail, onItemClick)
-
                 }
+            }
+            if (state.toastMessage.isNotBlank()) {
+                Toast.makeText(LocalContext.current, state.toastMessage, Toast.LENGTH_SHORT).show()
             }
         }
         state.isLoading -> Box(
@@ -57,85 +56,78 @@ fun CocktailScreen(
     }
 }
 
-    @Composable
-    fun ErrorButton(errorText: String, viewModel: ViewModel) {
-        Column(
-            modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceEvenly,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Button(
-                onClick = {
-                    when (viewModel) {
-                        is CocktailViewModel -> viewModel.retryGetCocktails()
-                      //  is LocationDetailViewModel -> viewModel.retryGetLocation()
-                    }
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.errorContainer,
-                    contentColor = MaterialTheme.colorScheme.onErrorContainer
-                ),
-                shape = MaterialTheme.shapes.small
-            ) {
-                Text(
-                    text = errorText,
-                    style = MaterialTheme.typography.titleMedium,
-                    textAlign = TextAlign.Center
-                )
-            }
-        }
-    }
-
-
-
-    @Composable
-    fun CocktailItem(item: Cocktail, onItemClick: (id: String) -> Unit) {
-        Card(
-            elevation = CardDefaults.cardElevation(),
-            modifier = Modifier
-                .padding(dimensionResource(R.dimen.mediumPadding))
-                .clickable { onItemClick(item.id) }
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(dimensionResource(R.dimen.mediumPadding))
-            ) {
-
-                CocktailIcon(Icons.Filled.Place, Modifier.weight(0.15f))
-                CocktailInfo(item.name , item.glass, Modifier.weight(0.85f))
-            }
-        }
-    }
-
-    @Composable
-    fun CocktailInfo(
-        title: String,
-        type: String,
-        modifier: Modifier,
-        horizontalAlignment: Alignment.Horizontal = Alignment.Start
+@Composable
+fun ErrorButton(errorText: String, viewModel: ViewModel) {
+    Column(
+        modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceEvenly,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Column(modifier = modifier, horizontalAlignment = horizontalAlignment) {
-            Text(text = title, style = MaterialTheme.typography.titleMedium)
+        Button(
+            onClick = {
+                when (viewModel) {
+                    is CocktailViewModel -> viewModel.retryGetCocktails()
+                    is CocktailDetailViewModel -> viewModel.retryGetCocktail()
+                }
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.errorContainer,
+                contentColor = MaterialTheme.colorScheme.onErrorContainer
+            ),
+            shape = MaterialTheme.shapes.small
+        ) {
             Text(
-                text = type,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier
-                    .alpha(0.8f)
-                    .padding(top = dimensionResource(id = R.dimen.mediumPadding))
+                text = errorText,
+                style = MaterialTheme.typography.titleMedium,
+                textAlign = TextAlign.Center
             )
         }
     }
+}
 
+@Composable
+fun CocktailItem(item: Cocktail, onItemClick: (name: String) -> Unit) {
+    Card(
+        elevation = CardDefaults.cardElevation(),
+        modifier = Modifier
+            .padding(dimensionResource(R.dimen.mediumPadding))
+            .clickable { onItemClick(item.name) }
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(dimensionResource(R.dimen.mediumPadding))
+        ) {
+            CocktailIcon(Icons.Filled.Info, Modifier.weight(0.15f))
+            CocktailInfo(item.name, item.category, Modifier.weight(0.85f))
+        }
+    }
+}
 
-
-
-    @Composable
-    fun CocktailIcon(icon: ImageVector, modifier: Modifier) {
-        Image(
-            imageVector = icon,
-            contentDescription = stringResource(id = R.string.icon_cocktail),
-            modifier = Modifier.padding(dimensionResource(id = R.dimen.mediumPadding))
+@Composable
+fun CocktailInfo(
+    title: String,
+    category: String,
+    modifier: Modifier,
+    horizontalAlignment: Alignment.Horizontal = Alignment.Start
+) {
+    Column(modifier = modifier, horizontalAlignment = horizontalAlignment) {
+        Text(text = title, style = MaterialTheme.typography.titleMedium)
+        Text(
+            text = category,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier
+                .alpha(0.8f)
         )
     }
+}
+
+@Composable
+fun CocktailIcon(icon: ImageVector, modifier: Modifier) {
+    Image(
+        imageVector = icon,
+        contentDescription = stringResource(id = R.string.icon_cocktail),
+        modifier = Modifier.padding(dimensionResource(id = R.dimen.mediumPadding))
+    )
+}
 
 
 

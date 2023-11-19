@@ -131,21 +131,21 @@ fun LocalCocktail.toCocktail() =
         instructions = instructions.orEmpty(),
         imageURL = imageURL.orEmpty(),
         ingredientsMap = mapOf(
-            ingredient1 to measure1,
-            ingredient2 to measure2,
-            ingredient3 to measure3,
-            ingredient4 to measure4,
-            ingredient5 to measure5,
-            ingredient6 to measure6,
-            ingredient7 to measure7,
-            ingredient8 to measure8,
-            ingredient9 to measure9,
-            ingredient10 to measure10,
-            ingredient11 to measure11,
-            ingredient12 to measure12,
-            ingredient13 to measure13,
-            ingredient14 to measure14,
-            ingredient15 to measure15
+            ingredient1 to measure1.orEmpty(),
+            ingredient2 to measure2.orEmpty(),
+            ingredient3 to measure3.orEmpty(),
+            ingredient4 to measure4.orEmpty(),
+            ingredient5 to measure5.orEmpty(),
+            ingredient6 to measure6.orEmpty(),
+            ingredient7 to measure7.orEmpty(),
+            ingredient8 to measure8.orEmpty(),
+            ingredient9 to measure9.orEmpty(),
+            ingredient10 to measure10.orEmpty(),
+            ingredient11 to measure11.orEmpty(),
+            ingredient12 to measure12.orEmpty(),
+            ingredient13 to measure13.orEmpty(),
+            ingredient14 to measure14.orEmpty(),
+            ingredient15 to measure15.orEmpty()
         )
     )
 

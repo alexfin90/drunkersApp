@@ -50,6 +50,7 @@ class CocktailViewModel@Inject constructor(
     }
 
     private fun getCocktails() {
+
         //Note launch use for default  Dispatchers.MAIN
         viewModelScope.launch(errorHandle + dispatcher) {
             val useCase = getLocationsUseCase()
@@ -58,7 +59,7 @@ class CocktailViewModel@Inject constructor(
     }
 
     fun retryGetCocktails() {
-        _state.value = _state.value.copy(isLoading = true, error = "")
+        _state.value = _state.value.copy(isLoading = true, error = "", toastMessage = "")
         getCocktails()
     }
 }

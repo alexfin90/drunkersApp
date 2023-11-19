@@ -8,7 +8,6 @@
     <string name="network_error">"Network Error \n Tap to Retry!"</string>
     <string name="generic_error">Generic Error \n Tap to Retry!</string>
     <string name="ko_internet"> KO internet App will works offline with stored data</string>
-    <string name="ok_internet"> OK Internet App works with fresh data</string>
     <string name="Population"> Population:</string>
     <string name="Area"> Area mq: </string>
     <string name="Flag_of"> Flag of </string>
@@ -16,4 +15,12 @@
     <string name="Subregion"> Subregion: </string>
     <string name="LocationCode"> Location Code: </string>
     <string name="Capital"> Capital: </string>
+
+
+    <string name="catergory"> Category: </string>
+    <string name="alcoholic"> alcoholic: </string>
+    <string name="glass"> glass: </string>
+    <string name="instructions"> instructions: </string>
+    <string name="ingredients"> ingredients: </string>
+
 </resources>
