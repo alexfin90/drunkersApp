@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.softdream.drunkersapp.R
 import com.softdream.drunkersapp.data.di.MainDispatcher
-import com.softdream.drunkersapp.domain.GetLocationsUseCase
+import com.softdream.drunkersapp.domain.GetCocktailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
@@ -16,19 +16,18 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 @HiltViewModel
-class LocationViewModel @Inject constructor(
-    private val getLocationsUseCase: GetLocationsUseCase,
+class CocktailViewModel@Inject constructor(
+    private val getLocationsUseCase: GetCocktailsUseCase,
     @MainDispatcher private val dispatcher: CoroutineDispatcher,
     @ApplicationContext private val application: Context?
 ) : ViewModel() {
 
     //ViewModel only modify the UI state  and call domain layer
-    private val _state = mutableStateOf(LocationScreenState(listOf()))
+    private val _state = mutableStateOf(CocktailScreenState(listOf()))
 
     //expose the state to compose without possibility to modify state
-    val state: State<LocationScreenState> get() = _state
+    val state: State<CocktailScreenState> get() = _state
 
     private val errorHandle =
         CoroutineExceptionHandler { _, exception ->
@@ -39,28 +38,27 @@ class LocationViewModel @Inject constructor(
                 )
                 _state.value = _state.value.copy(
                     isLoading = false,
-                    error = exception.message ?: application.let { it!!.getString(R.string.generic_error) }
+                    error = exception.message
+                        ?: application.let { it!!.getString(R.string.generic_error) }
                 )
                 exception.printStackTrace()
             }
         }
 
     init {
-        getLocations()
+        getCocktails()
     }
 
-    private fun getLocations() {
+    private fun getCocktails() {
         //Note launch use for default  Dispatchers.MAIN
         viewModelScope.launch(errorHandle + dispatcher) {
-            val locations = getLocationsUseCase()
-            _state.value = _state.value.copy(locations = locations, isLoading = false)
+            val useCase = getLocationsUseCase()
+            _state.value = _state.value.copy(cocktails = useCase.cocktails, isLoading = false , toastMessage = useCase.infomessage)
         }
     }
 
-    fun retryGetLocations() {
+    fun retryGetCocktails() {
         _state.value = _state.value.copy(isLoading = true, error = "")
-        getLocations()
+        getCocktails()
     }
-
-
 }

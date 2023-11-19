@@ -23,7 +23,7 @@ class LocationRepository @Inject constructor(
     private var restInterface: LocationApiService,
     private var locationDao: LocationDao,
     @IoDispatcher private val dispatcher: CoroutineDispatcher,
-    @ApplicationContext private val application : Context? = null,
+    @ApplicationContext private val application: Context? = null,
 ) {
 
     suspend fun getAllLocations(): List<Location> {
@@ -37,10 +37,10 @@ class LocationRepository @Inject constructor(
                     is HttpException -> {
                         if (locationDao.getAll().isEmpty())
                             throw Exception(
-                              application?.getString(R.string.generic_error)
+                                application?.getString(R.string.generic_error)
                             )
                     }
-                    else -> throw  e
+                    else -> throw e
                 }
             }
             return@withContext locationDao.getAll().map { it.toLocation() }
@@ -69,7 +69,7 @@ class LocationRepository @Inject constructor(
                             )
                         }
                     }
-                    else -> throw  e
+                    else -> throw e
                 }
             }
             return@withContext locationDao.getLocationByID(id)?.toLocation()

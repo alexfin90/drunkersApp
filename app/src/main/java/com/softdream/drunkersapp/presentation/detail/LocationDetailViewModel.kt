@@ -16,7 +16,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LocationDetailViewModel @Inject constructor( @ApplicationContext  application: Context, private val getLocationByIDUseCase: GetLocationByIDUseCase, stateHandle: SavedStateHandle) : ViewModel() {
+class LocationDetailViewModel @Inject constructor( @ApplicationContext  application: Context,
+                                                   private val getLocationByIDUseCase: GetLocationByIDUseCase,
+                                                   stateHandle: SavedStateHandle) : ViewModel() {
 
     //ViewModel only modify the UI state  and call domain layer
 

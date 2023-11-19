@@ -14,19 +14,17 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
+
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import androidx.navigation.navDeepLink
-import com.softdream.drunkersapp.BuildConfig
-import com.softdream.drunkersapp.LocationScreen
+
 import com.softdream.drunkersapp.R
-import com.softdream.drunkersapp.presentation.detail.LocationDetailScreen
-import com.softdream.drunkersapp.presentation.detail.LocationDetailViewModel
-import com.softdream.drunkersapp.presentation.list.LocationViewModel
-import com.softdream.drunkersapp.ui.theme.WorldLocationsTheme
+
+import com.softdream.drunkersapp.presentation.list.CocktailScreen
+import com.softdream.drunkersapp.presentation.list.CocktailViewModel
+
+import com.softdream.drunkersapp.ui.theme.DrunkersAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,13 +35,13 @@ class MainActivity : ComponentActivity() {
 
         setContent {
 
-            WorldLocationsTheme() {
+            DrunkersAppTheme() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,
                 ) {
-                    WorldLocationApp()
+                    DrunkersApp()
                 }
             }
         }
@@ -51,8 +49,18 @@ class MainActivity : ComponentActivity() {
 
 
     @Composable
-    fun WorldLocationApp() {
-        val locations = stringResource(R.string.locationsScreen)
+    fun DrunkersApp() {
+        val cocktailsScreen = stringResource(id = R.string.cocktailsScreen)
+        navController = rememberNavController()
+        NavHost(navController = navController, startDestination = cocktailsScreen ){
+            composable(route = cocktailsScreen){
+                val viewModel: CocktailViewModel = hiltViewModel()
+                CocktailScreen(state = viewModel.state.value,
+                    viewModel = viewModel, onItemClick = {
+                    id -> navController.navigate("$cocktailsScreen/$id")
+                })
+            }
+       /* val locations = stringResource(R.string.locationsScreen)
         navController = rememberNavController()
         NavHost(navController, startDestination = locations) {
             composable(route = locations) {
@@ -61,8 +69,8 @@ class MainActivity : ComponentActivity() {
                     viewModel = viewModel,
                     state = viewModel.state.value,
                     onItemClick = { id -> navController.navigate("$locations/$id") })
-            }
-            composable(
+            }*/
+     /*       composable(
                 route = "$locations/{location_id}",
                 deepLinks = listOf(navDeepLink {
                     uriPattern = "${BuildConfig.DEEPLINK_BASE_URL}{location_id}"
@@ -75,15 +83,15 @@ class MainActivity : ComponentActivity() {
             ) {
                 val viewModel: LocationDetailViewModel = hiltViewModel()
                 LocationDetailScreen(state = viewModel.state.value, viewModel)
-            }
+            }*/
         }
     }
 
-    @Preview(apiLevel = 25, showBackground = true, showSystemUi = true, device = Devices.NEXUS_5)
+    @Preview(apiLevel = 29, showBackground = true, showSystemUi = true, device = Devices.NEXUS_5)
     @Composable
     fun DefaultPreview() {
-        WorldLocationsTheme {
-            WorldLocationApp()
+        DrunkersAppTheme {
+            DrunkersApp()
         }
     }
 

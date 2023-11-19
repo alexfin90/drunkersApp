@@ -72,7 +72,7 @@ private val worldLocationsLightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun WorldLocationsTheme(
+fun DrunkersAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit

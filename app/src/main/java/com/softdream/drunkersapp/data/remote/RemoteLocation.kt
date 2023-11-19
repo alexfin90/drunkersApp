@@ -6,6 +6,8 @@ import com.softdream.drunkersapp.data.local.LocalFlagsProperty
 import com.softdream.drunkersapp.data.local.LocalLocation
 import com.softdream.drunkersapp.data.local.LocalNameProperty
 
+//DTO class
+
 data class RemoteLocation(
     @SerializedName("cca2")
     val id: String,
