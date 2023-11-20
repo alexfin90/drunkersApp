@@ -26,11 +26,12 @@ class CocktailRepository @Inject constructor(
     @ApplicationContext private val application: Context? = null,
 ) {
 
-    suspend fun getAllCocktails(): Drinks {
+    suspend fun getAllCocktails(name: String): Drinks {
         var infoMessage = ""
+        var text = name
         return withContext(dispatcher) {
             try {
-                refreshCache()
+                refreshAllCache(name)
             } catch (e: Exception) {
                 when (e) {
                     is UnknownHostException,
@@ -45,21 +46,21 @@ class CocktailRepository @Inject constructor(
                     else -> throw e
                 }
             }
-            return@withContext Drinks(cocktails = cocktailsDao.getAll().map { it.toCocktail() }, infomessage = infoMessage)
+            return@withContext Drinks(cocktails = cocktailsDao.getAllByName(text).map { it.toCocktail() }, infomessage = infoMessage)
         }
     }
 
 
-    private suspend fun refreshCache() {
+    private suspend fun refreshAllCache(name: String) {
         //Note Retrofit set behind the scenes Dispatchers.IO for all suspend methods from within its interface
-        val drinks = restInterface.getCocktails()
+        val drinks = restInterface.getCocktails(name)
         cocktailsDao.addAll(drinks.cocktails.map { it.toLocalCocktail() })
     }
 
     suspend fun getCocktailByName(name: String): Cocktail? {
         return withContext(dispatcher) {
             try {
-                refreshCache(name)
+                refreshSingleCache(name)
             } catch (e: Exception) {
                 when (e) {
                     is UnknownHostException,
@@ -76,7 +77,7 @@ class CocktailRepository @Inject constructor(
         }
     }
 
-    private suspend fun refreshCache(name: String) {
+    private suspend fun refreshSingleCache(name: String) {
         val response = restInterface.getCocktailsByName(name)
         cocktailsDao.addCocktail(response.cocktails.first().toLocalCocktail())
     }

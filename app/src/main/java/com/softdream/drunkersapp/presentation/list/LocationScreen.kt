@@ -16,12 +16,10 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.ViewModel
 import com.softdream.drunkersapp.domain.Location
-import com.softdream.drunkersapp.presentation.detail.LocationDetailViewModel
+import com.softdream.drunkersapp.presentation.list.ErrorButton
 import com.softdream.drunkersapp.presentation.list.LocationScreenState
-import com.softdream.drunkersapp.presentation.list.LocationViewModel
 
 
 @Composable
@@ -53,6 +51,7 @@ fun LocationScreen(
 
 }
 
+/*
 @Composable
 fun ErrorButton(errorText: String, viewModel: ViewModel) {
     Column(
@@ -80,6 +79,7 @@ fun ErrorButton(errorText: String, viewModel: ViewModel) {
         }
     }
 }
+*/
 
 @Composable
 fun LocationItem(item: Location, onItemClick: (id: String) -> Unit) {

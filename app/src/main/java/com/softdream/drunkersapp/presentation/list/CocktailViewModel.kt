@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CocktailViewModel@Inject constructor(
+class CocktailViewModel @Inject constructor(
     private val getLocationsUseCase: GetCocktailsUseCase,
     @MainDispatcher private val dispatcher: CoroutineDispatcher,
     @ApplicationContext private val application: Context?
@@ -25,7 +25,6 @@ class CocktailViewModel@Inject constructor(
 
     //ViewModel only modify the UI state  and call domain layer
     private val _state = mutableStateOf(CocktailScreenState(listOf()))
-
 
     //expose the state to compose without possibility to modify state
     val state: State<CocktailScreenState> get() = _state
@@ -47,20 +46,21 @@ class CocktailViewModel@Inject constructor(
         }
 
     init {
-        getCocktails()
+        //init list with data
+        getCocktails("")
     }
 
-    private fun getCocktails() {
-
+    fun getCocktails(text: String) {
         //Note launch use for default  Dispatchers.MAIN
         viewModelScope.launch(errorHandle + dispatcher) {
-            val useCase = getLocationsUseCase()
-            _state.value = _state.value.copy(cocktails = useCase.cocktails, isLoading = false , toastMessage = useCase.infomessage)
+            val useCase = getLocationsUseCase(text)
+            _state.value = _state.value.copy(cocktails = useCase.cocktails, isLoading = false, toastMessage = useCase.infomessage)
         }
     }
 
-    fun retryGetCocktails() {
+    fun retryGetCocktails(text: String) {
         _state.value = _state.value.copy(isLoading = true, error = "", toastMessage = "")
-        getCocktails()
+        getCocktails(text)
     }
+
 }

@@ -62,5 +62,9 @@ class LocationViewModel @Inject constructor(
         getLocations()
     }
 
+    fun search(){
+
+    }
+
 
 }

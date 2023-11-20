@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [LocalCocktail::class],
-    version = 1,
+    version = 3,
     exportSchema = false
 )
 abstract class CocktailsDb : RoomDatabase() {

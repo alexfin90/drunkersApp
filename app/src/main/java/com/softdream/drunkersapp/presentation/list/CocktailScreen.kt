@@ -24,7 +24,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
-import com.softdream.drunkersapp.ErrorButton
 import com.softdream.drunkersapp.R
 import com.softdream.drunkersapp.domain.Cocktail
 import com.softdream.drunkersapp.presentation.detail.CocktailDetailViewModel
@@ -45,7 +44,7 @@ fun CocktailScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
     ) {
-        SearchView(state = texState, placeHolder = "Search here...")
+        SearchView(state = texState, placeHolder = "Search here...", viewModel)
 
         when {
             state.cocktails.isNotEmpty() -> {
@@ -75,12 +74,17 @@ fun CocktailScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchView(state: MutableState<TextFieldValue>, placeHolder: String) {
+fun SearchView(state: MutableState<TextFieldValue>, placeHolder: String,  viewModel: ViewModel) {
 
     TextField(
         value = state.value,
         onValueChange = { newText ->
-            state.value = newText
+            run {
+                state.value = newText
+                when (viewModel) {
+                    is CocktailViewModel -> viewModel.getCocktails(state.value.text)
+                }
+            }
         },
         placeholder = { Text(text = placeHolder) },
         modifier = Modifier
@@ -105,7 +109,8 @@ fun ErrorButton(errorText: String, viewModel: ViewModel) {
         Button(
             onClick = {
                 when (viewModel) {
-                    is CocktailViewModel -> viewModel.retryGetCocktails()
+                    //TODO CHECK mettere il testo da cercare
+                    is CocktailViewModel -> viewModel.retryGetCocktails("")
                     is CocktailDetailViewModel -> viewModel.retryGetCocktail()
                 }
             },

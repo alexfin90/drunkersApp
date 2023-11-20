@@ -16,9 +16,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.softdream.drunkersapp.ErrorButton
+
 import com.softdream.drunkersapp.R
 import com.softdream.drunkersapp.domain.Cocktail
+import com.softdream.drunkersapp.presentation.list.ErrorButton
 
 
 @Composable

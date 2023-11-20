@@ -22,9 +22,10 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.softdream.drunkersapp.ErrorButton
+
 import com.softdream.drunkersapp.R
 import com.softdream.drunkersapp.domain.Location
+import com.softdream.drunkersapp.presentation.list.ErrorButton
 
 
 @OptIn(ExperimentalGlideComposeApi::class)

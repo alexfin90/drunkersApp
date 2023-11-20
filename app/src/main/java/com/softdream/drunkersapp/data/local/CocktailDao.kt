@@ -11,6 +11,9 @@ interface CocktailDao {
     @Query("SELECT * FROM cocktails")
     suspend fun getAll(): List<LocalCocktail>
 
+    @Query("SELECT * FROM cocktails WHERE strDrink LIKE '%' || :name || '%'")
+    suspend fun getAllByName(name: String): List<LocalCocktail>
+
     @Query("SELECT * FROM cocktails WHERE strDrink=:name")
     suspend fun getCocktailByName(name: String) : LocalCocktail?
 

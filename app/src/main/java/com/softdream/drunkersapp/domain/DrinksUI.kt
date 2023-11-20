@@ -1,7 +1,7 @@
 package com.softdream.drunkersapp.domain
 
 
-data class Drinks(val cocktails: List<Cocktail>, val infomessage: String ="")
+data class Drinks(var cocktails: List<Cocktail>, val infomessage: String ="")
 
 data class Cocktail(
     val id: String,
