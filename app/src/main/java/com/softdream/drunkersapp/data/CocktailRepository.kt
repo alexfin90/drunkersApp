@@ -28,7 +28,6 @@ class CocktailRepository @Inject constructor(
 
     suspend fun getAllCocktails(name: String): Drinks {
         var infoMessage = ""
-        var text = name
         return withContext(dispatcher) {
             try {
                 refreshAllCache(name)
@@ -46,7 +45,7 @@ class CocktailRepository @Inject constructor(
                     else -> throw e
                 }
             }
-            return@withContext Drinks(cocktails = cocktailsDao.getAllByName(text).map { it.toCocktail() }, infomessage = infoMessage)
+            return@withContext Drinks(cocktails = cocktailsDao.getAllByName(name).map { it.toCocktail() }, infomessage = infoMessage)
         }
     }
 
@@ -54,7 +53,9 @@ class CocktailRepository @Inject constructor(
     private suspend fun refreshAllCache(name: String) {
         //Note Retrofit set behind the scenes Dispatchers.IO for all suspend methods from within its interface
         val drinks = restInterface.getCocktails(name)
-        cocktailsDao.addAll(drinks.cocktails.map { it.toLocalCocktail() })
+        drinks.cocktails?.let { cocktails ->
+            cocktailsDao.addAll(cocktails.map { it.toLocalCocktail() })
+        }
     }
 
     suspend fun getCocktailByName(name: String): Cocktail? {
@@ -79,6 +80,9 @@ class CocktailRepository @Inject constructor(
 
     private suspend fun refreshSingleCache(name: String) {
         val response = restInterface.getCocktailsByName(name)
-        cocktailsDao.addCocktail(response.cocktails.first().toLocalCocktail())
+        response.cocktails?.let { cocktails ->
+            cocktailsDao.addCocktail(cocktails.first().toLocalCocktail())
+        }
     }
+
 }
