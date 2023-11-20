@@ -45,7 +45,7 @@ class CocktailRepository @Inject constructor(
                     else -> throw e
                 }
             }
-            return@withContext Drinks(cocktails = cocktailsDao.getAllByName(name).map { it.toCocktail() }, infomessage = infoMessage)
+            return@withContext Drinks(cocktails = cocktailsDao.getAllByNameOrIngredients(name).map { it.toCocktail() }, infomessage = infoMessage)
         }
     }
 
