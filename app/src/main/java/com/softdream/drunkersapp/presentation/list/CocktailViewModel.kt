@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.softdream.drunkersapp.R
@@ -22,12 +23,13 @@ class CocktailViewModel @Inject constructor(
     @MainDispatcher private val dispatcher: CoroutineDispatcher,
     @ApplicationContext private val application: Context?
 ) : ViewModel() {
-
     //ViewModel only modify the UI state  and call domain layer
     private val _state = mutableStateOf(CocktailScreenState(listOf()))
 
     //expose the state to compose without possibility to modify state
     val state: State<CocktailScreenState> get() = _state
+
+    var textFieldValue = mutableStateOf(TextFieldValue(""))
 
     private val errorHandle =
         CoroutineExceptionHandler { _, exception ->
@@ -47,15 +49,20 @@ class CocktailViewModel @Inject constructor(
 
     init {
         //init list with data
-        getCocktails("")
+        getCocktails(textFieldValue.value.text)
     }
 
-    fun getCocktails(text: String) {
+    private fun getCocktails(text: String) {
         //Note launch use for default  Dispatchers.MAIN
         viewModelScope.launch(errorHandle + dispatcher) {
             val useCase = getLocationsUseCase(text)
             _state.value = _state.value.copy(cocktails = useCase.cocktails, isLoading = false, toastMessage = useCase.infomessage)
         }
+    }
+
+    fun onTextFieldValueChanged(newValue: TextFieldValue) {
+        textFieldValue.value = newValue
+        getCocktails(textFieldValue.value.text)
     }
 
     fun retryGetCocktails(text: String) {

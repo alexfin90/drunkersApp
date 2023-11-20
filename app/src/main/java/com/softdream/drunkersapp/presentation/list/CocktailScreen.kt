@@ -20,7 +20,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
@@ -35,17 +34,14 @@ fun CocktailScreen(
     onItemClick: (name: String) -> Unit = {}
 ) {
 
-    val texState = remember {
-        mutableStateOf(TextFieldValue(""))
-    }
-    val searchedText = texState.value.text
-
+    /*  val texState = remember {
+          mutableStateOf(TextFieldValue(""))
+      }*/
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
     ) {
-        SearchView(state = texState, placeHolder = "Search here...", viewModel)
-
+        SearchView(placeHolder = stringResource(id = R.string.search_placeholder), viewModel as CocktailViewModel)
         when {
             state.cocktails.isNotEmpty() -> {
                 LazyColumn(contentPadding = PaddingValues()) {
@@ -74,18 +70,12 @@ fun CocktailScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchView(state: MutableState<TextFieldValue>, placeHolder: String,  viewModel: ViewModel) {
+fun SearchView(placeHolder: String, viewModel: CocktailViewModel) {
+    val text by remember(viewModel::textFieldValue)
 
     TextField(
-        value = state.value,
-        onValueChange = { newText ->
-            run {
-                state.value = newText
-                when (viewModel) {
-                    is CocktailViewModel -> viewModel.getCocktails(state.value.text)
-                }
-            }
-        },
+        value = text,
+        onValueChange = {newText -> viewModel.onTextFieldValueChanged(newText)},
         placeholder = { Text(text = placeHolder) },
         modifier = Modifier
             .fillMaxWidth()
@@ -170,7 +160,7 @@ fun CocktailIcon(icon: ImageVector, modifier: Modifier) {
     Image(
         imageVector = icon,
         contentDescription = stringResource(id = R.string.icon_cocktail),
-        modifier = Modifier.padding(dimensionResource(id = R.dimen.mediumPadding))
+        modifier = modifier.padding(dimensionResource(id = R.dimen.mediumPadding))
     )
 }
 

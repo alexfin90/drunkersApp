@@ -23,4 +23,6 @@
     <string name="instructions"> instructions: </string>
     <string name="ingredients"> ingredients: </string>
 
+    <string name="search_placeholder">Search here by name or ingredients</string>
+
 </resources>
