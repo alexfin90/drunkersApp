@@ -18,7 +18,6 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
-        buildConfigField "String", "LOCATIONS_BASE_URL", "\"https://restcountries.com/\""
         buildConfigField "String", "COCKTAIL_BASE_URL", "\"https://www.thecocktaildb.com/\""
         buildConfigField "String", "DEEPLINK_BASE_URL", "\"drunkersapp://cocktail.detail/\""
 

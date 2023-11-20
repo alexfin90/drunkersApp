@@ -13,7 +13,7 @@ data class LocalCocktail(
     val id: String,
 
     @ColumnInfo(name = "strDrink")
-    val name: String?,
+    val name: String,
 
     @ColumnInfo(name = "strCategory")
     val category: String?,
@@ -124,7 +124,7 @@ data class LocalCocktail(
 fun LocalCocktail.toCocktail() =
     Cocktail(
         id = id,
-        name = name.orEmpty(),
+        name = name,
         category = category.orEmpty(),
         alcoholic = alcoholic.orEmpty(),
         glass = glass.orEmpty(),

@@ -36,7 +36,7 @@ class CocktailRepository @Inject constructor(
                     is UnknownHostException,
                     is ConnectException,
                     is HttpException -> {
-                        if (cocktailsDao.getAll().isEmpty()) {
+                        if (cocktailsDao.getAllByNameOrIngredients(name).isEmpty()) {
                             throw Exception(application?.getString(R.string.generic_error))
                         } else {
                             infoMessage = application?.getString(R.string.ko_internet).toString()

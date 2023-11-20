@@ -11,5 +11,5 @@ data class Cocktail(
     val glass: String = "",
     val instructions: String = "",
     val imageURL: String = "",
-    val ingredientsMap: Map<String?, String?>?
+    val ingredientsMap: Map<String?, String?> = emptyMap()
 )

@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CocktailViewModel @Inject constructor(
-    private val getLocationsUseCase: GetCocktailsUseCase,
+    private val getCocktailsUseCase: GetCocktailsUseCase,
     @MainDispatcher private val dispatcher: CoroutineDispatcher,
     @ApplicationContext private val application: Context?
 ) : ViewModel() {
@@ -55,7 +55,7 @@ class CocktailViewModel @Inject constructor(
     private fun getCocktails(text: String) {
         //Note launch use for default  Dispatchers.MAIN
         viewModelScope.launch(errorHandle + dispatcher) {
-            val useCase = getLocationsUseCase(text)
+            val useCase = getCocktailsUseCase(text)
             _state.value = _state.value.copy(cocktails = useCase.cocktails, isLoading = false, toastMessage = useCase.infomessage)
         }
     }

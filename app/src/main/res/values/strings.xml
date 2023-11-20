@@ -1,28 +1,15 @@
 <resources>
     <string name="app_name">DrunkersApp</string>
-    <string name="icon_location">Icon of a location point for WorldLocation App</string>
-    <string name="icon_cocktail">Icon of a cocktail point for WorldLocation App</string>
-    <string name="locationsScreen">locations</string>
+    <string name="icon_cocktail">Icon of a cocktail point for Drunkers App</string>
     <string name="cocktailsScreen">cocktails</string>
-
     <string name="network_error">"Network Error \n Tap to Retry!"</string>
     <string name="generic_error">Generic Error \n Tap to Retry!</string>
     <string name="ko_internet"> KO internet App will works offline with stored data</string>
-    <string name="Population"> Population:</string>
-    <string name="Area"> Area mq: </string>
-    <string name="Flag_of"> Flag of </string>
-    <string name="Region"> Region: </string>
-    <string name="Subregion"> Subregion: </string>
-    <string name="LocationCode"> Location Code: </string>
-    <string name="Capital"> Capital: </string>
-
-
     <string name="catergory"> Category: </string>
     <string name="alcoholic"> alcoholic: </string>
     <string name="glass"> glass: </string>
     <string name="instructions"> instructions: </string>
     <string name="ingredients"> ingredients: </string>
-
     <string name="search_placeholder">Search here by name or ingredients</string>
 
 </resources>

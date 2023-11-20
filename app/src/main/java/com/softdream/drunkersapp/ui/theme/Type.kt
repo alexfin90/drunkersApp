@@ -7,7 +7,7 @@ import androidx.compose.ui.unit.sp
 
 // Set of Material typography styles to start with
 // Material 3 typography
-val worldLocationsTypography = Typography(
+val drunkersAppTypography = Typography(
     headlineLarge = TextStyle(
         fontWeight = FontWeight.SemiBold,
         fontSize = 32.sp,
