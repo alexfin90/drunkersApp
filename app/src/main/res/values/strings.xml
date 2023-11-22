@@ -2,7 +2,7 @@
     <string name="app_name">DrunkersApp</string>
     <string name="icon_cocktail">Icon of a cocktail point for Drunkers App</string>
     <string name="cocktailsScreen">cocktails</string>
-    <string name="network_error">"Network Error \n Tap to Retry!"</string>
+    <string name="network_error">"Network Error and No Data are Stored in DB \n Tap to Retry! "</string>
     <string name="generic_error">Generic Error \n Tap to Retry!</string>
     <string name="ko_internet"> KO internet App will works offline with stored data</string>
     <string name="catergory"> Category: </string>

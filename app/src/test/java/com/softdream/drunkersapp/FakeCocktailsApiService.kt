@@ -13,6 +13,7 @@ class FakeCocktailsApiService : CocktailApiService {
     }
 
     override suspend fun getCocktailsByName(s: String): RemoteCocktails {
-        TODO("Not yet implemented")
+        delay(500)
+        return MockCocktail.getRemoteCocktails()
     }
 }

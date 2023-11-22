@@ -37,7 +37,7 @@ class CocktailRepository @Inject constructor(
                     is ConnectException,
                     is HttpException -> {
                         if (cocktailsDao.getAllByNameOrIngredients(name).isEmpty()) {
-                            throw Exception(application?.getString(R.string.generic_error))
+                            throw Exception(application?.getString(R.string.network_error))
                         } else {
                             infoMessage = application?.getString(R.string.ko_internet).toString()
                         }
@@ -61,7 +61,7 @@ class CocktailRepository @Inject constructor(
     suspend fun getCocktailByName(name: String): Cocktail? {
         return withContext(dispatcher) {
             try {
-                refreshSingleCache(name)
+                refreshCache(name)
             } catch (e: Exception) {
                 when (e) {
                     is UnknownHostException,
@@ -78,10 +78,10 @@ class CocktailRepository @Inject constructor(
         }
     }
 
-    private suspend fun refreshSingleCache(name: String) {
+    private suspend fun refreshCache(name: String) {
         val response = restInterface.getCocktailsByName(name)
         response.cocktails?.let { cocktails ->
-            cocktailsDao.addCocktail(cocktails.first().toLocalCocktail())
+            cocktailsDao.addAll(cocktails.map { it.toLocalCocktail() })
         }
     }
 

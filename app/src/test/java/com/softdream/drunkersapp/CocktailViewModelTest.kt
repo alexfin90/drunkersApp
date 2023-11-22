@@ -39,6 +39,12 @@ class CocktailViewModelTest {
         advanceUntilIdle()
         val currentSate = testVM.state.value
         println(currentSate.toString())
+        println(CocktailScreenState(
+            cocktails = MockCocktail.getDomainDrinks().cocktails,
+            isLoading = false,
+            error = "",
+            toastMessage = ""
+        ))
         assert(
             currentSate == CocktailScreenState(
                 cocktails = MockCocktail.getDomainDrinks().cocktails,

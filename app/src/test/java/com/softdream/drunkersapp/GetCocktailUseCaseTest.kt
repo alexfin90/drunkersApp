@@ -1,8 +1,7 @@
 package com.softdream.drunkersapp
 
 import com.softdream.drunkersapp.data.CocktailRepository
-import com.softdream.drunkersapp.data.MockCocktail
-import com.softdream.drunkersapp.domain.GetCocktailsUseCase
+import com.softdream.drunkersapp.domain.GetCocktailByNameUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
@@ -17,26 +16,27 @@ class GetCocktailUseCaseTest {
     private val scope = TestScope(dispatcher)
 
     @Test
-    fun sortCocktailTest () = scope.runTest {
+    fun cocktailTest () = scope.runTest {
 
         val cocktailsRepository = CocktailRepository(FakeCocktailsApiService(),FakeCocktailsRoomDao(),dispatcher)
-        val getSortedCocktailsUseCase = GetCocktailsUseCase(cocktailsRepository)
+        val getCocktailsUseCase = GetCocktailByNameUseCase(cocktailsRepository)
+
+        val cocktailNameToSearch = "cocktail1"
 
         //Preload Data
-        cocktailsRepository.getAllCocktails("")
+        cocktailsRepository.getCocktailByName(cocktailNameToSearch)
         advanceUntilIdle()
 
 
         //Execute UseCase
-        val sortedCocktails = getSortedCocktailsUseCase.invoke("")
+        val cocktailTest = getCocktailsUseCase.invoke(cocktailNameToSearch)
         advanceUntilIdle()
 
-        val mockedCocktails = MockCocktail.getDomainDrinks()
-        println(sortedCocktails.toString())
-        println(mockedCocktails.toString())
 
-        //assert if first items name are note the same
-        assert(sortedCocktails.cocktails[0].name == mockedCocktails.cocktails[0].name)
+        println(cocktailTest.toString())
+
+        //assert if items name are note the same
+       assert(cocktailTest?.name == cocktailNameToSearch)
 
     }
 

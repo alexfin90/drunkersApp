@@ -11,15 +11,15 @@ object MockCocktail {
         val cocktails = arrayListOf(
             Cocktail(
                 "3", "cocktail3", "cocktail",
-                "shot", "shot", "lorem ipsum", "", emptyMap()
+                "shot", "shot", "lorem ipsum", "", mapOf(null to "")
             ),
             Cocktail(
                 "2", "cocktail2", "cocktail",
-                "shot", "shot", "lorem ipsum", "",emptyMap()
+                "shot", "shot", "lorem ipsum", "",mapOf(null to "")
             ),
             Cocktail(
                 "1", "cocktail1", "cocktail",
-                "shot", "shot", "lorem ipsum", "",emptyMap()
+                "shot", "shot", "lorem ipsum", "",mapOf(null to "")
             )
         )
 
