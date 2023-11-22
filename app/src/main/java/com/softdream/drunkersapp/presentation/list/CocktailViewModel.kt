@@ -52,7 +52,7 @@ class CocktailViewModel @Inject constructor(
         getCocktails(textFieldValue.value.text)
     }
 
-    private fun getCocktails(text: String) {
+    fun getCocktails(text: String) {
         //Note launch use for default  Dispatchers.MAIN
         viewModelScope.launch(errorHandle + dispatcher) {
             val useCase = getCocktailsUseCase(text)
@@ -62,7 +62,6 @@ class CocktailViewModel @Inject constructor(
 
     fun onTextFieldValueChanged(newValue: TextFieldValue) {
         textFieldValue.value = newValue
-        getCocktails(textFieldValue.value.text)
     }
 
     fun retryGetCocktails(text: String) {

@@ -26,6 +26,9 @@ import androidx.lifecycle.ViewModel
 import com.softdream.drunkersapp.R
 import com.softdream.drunkersapp.domain.Cocktail
 import com.softdream.drunkersapp.presentation.detail.CocktailDetailViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun CocktailScreen(
@@ -34,9 +37,7 @@ fun CocktailScreen(
     onItemClick: (name: String) -> Unit = {}
 ) {
 
-    /*  val texState = remember {
-          mutableStateOf(TextFieldValue(""))
-      }*/
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
@@ -72,7 +73,7 @@ fun CocktailScreen(
 @Composable
 fun SearchView(placeHolder: String, viewModel: CocktailViewModel) {
     val text by remember(viewModel::textFieldValue)
-
+    text.useDebounce(onChange = {viewModel.getCocktails(it.text)})
     TextField(
         value = text,
         onValueChange = {newText -> viewModel.onTextFieldValueChanged(newText)},
@@ -88,6 +89,30 @@ fun SearchView(placeHolder: String, viewModel: CocktailViewModel) {
     )
 
 }
+
+@Composable
+fun <T> T.useDebounce(
+    delayMillis: Long = 500L,
+    // 1. couroutine scope
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    onChange: (T) -> Unit
+): T{
+    // 2. updating state
+    val state by rememberUpdatedState(this)
+
+    // 3. launching the side-effect handler
+    DisposableEffect(state){
+        val job = coroutineScope.launch {
+            delay(delayMillis)
+            onChange(state)
+        }
+        onDispose {
+            job.cancel()
+        }
+    }
+    return state
+}
+
 
 @Composable
 fun ErrorButton(errorText: String, viewModel: ViewModel) {
