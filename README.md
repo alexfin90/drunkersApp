@@ -1,5 +1,5 @@
 # DrunkersAPP
-Demo Android APP showing list of Cocktails for Technogym Assignment
+Demo Android APP showing list of Cocktails
 using:
 
 - Compose
